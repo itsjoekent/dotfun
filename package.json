@@ -7,10 +7,10 @@
     "node": ">=20"
   },
   "scripts": {
-    "dev": "concurrently -n vite,cf \"vite build --watch\" \"wait-on public/build/index.html && wrangler pages dev ./public/build\"",
-    "deploy": "wrangler pages deploy",
+    "dev": "concurrently -n vite,cf \"vite build --watch\" \"wait-on public/build/index.html && wrangler dev\"",
+    "deploy": "vite build && wrangler deploy",
     "build": "vite build",
-    "cf-typegen": "wrangler types functions/worker-env.d.ts --include-runtime false"
+    "cf-typegen": "wrangler types worker/env.d.ts --include-runtime false"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20241205.0",
