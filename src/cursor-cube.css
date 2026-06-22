@@ -1,0 +1,284 @@
+/* Palette for cube */
+:root {
+  --bright-blue: #2d00f7;
+  --bright-electric-indigo: #6a00f4;
+  --bright-ultra-violet: #8900f2;
+  --bright-purple: #a100f2;
+  --bright-purple-vibrant: #b100e8;
+  --bright-orchid-pink: #db00b6;
+  --bright-electric-rose: #e500a4;
+  --bright-deep-pink: #f20089;
+  --cube-red: #dc2626;
+  --mono-50: #f8f9fa;
+  --mono-100: #e9ecef;
+}
+
+.cursor-cube {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 10000;
+  width: 14px;
+  height: 14px;
+  margin: -7px 0 0 -7px;
+  pointer-events: none;
+  will-change: transform;
+  display: none;
+}
+
+@media (pointer: fine) {
+  @media (prefers-reduced-motion: no-preference) {
+    .cursor-cube {
+      display: block;
+    }
+
+    .use-custom-cursor,
+    .use-custom-cursor * {
+      cursor: none !important;
+    }
+  }
+}
+
+.cursor-cube__wrapper {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  perspective: 80px;
+  filter: drop-shadow(0 0 4px color-mix(in srgb, var(--bright-purple) 60%, transparent));
+  transition: filter 0.35s ease;
+}
+
+.cursor-cube--pointer .cursor-cube__wrapper {
+  filter: drop-shadow(0 0 6px color-mix(in srgb, var(--bright-blue) 72%, transparent));
+}
+
+.cursor-cube--text .cursor-cube__wrapper {
+  filter: drop-shadow(0 0 5px color-mix(in srgb, var(--cube-red) 45%, transparent));
+}
+
+.cursor-cube__cube {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transform-origin: center center;
+  animation: cursor-cube-spin-horizontal 8s linear infinite;
+}
+
+.cursor-cube--pointer .cursor-cube__cube {
+  animation: cursor-cube-spin-vertical 3.5s linear infinite;
+}
+
+.cursor-cube--text .cursor-cube__cube {
+  animation: cursor-cube-spin-horizontal 4s linear infinite;
+}
+
+.cursor-cube__face {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 14px;
+  height: 14px;
+  border: 1px solid color-mix(in srgb, var(--mono-100) 40%, transparent);
+  backface-visibility: visible;
+  box-shadow: inset 0 0 6px color-mix(in srgb, var(--mono-50) 15%, transparent);
+  transition: background 0.35s ease, box-shadow 0.35s ease;
+}
+
+/* Default — purple, spin on Y */
+.cursor-cube--default .cursor-cube__face:nth-child(1) {
+  transform: translateZ(7px);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--bright-purple-vibrant) 60%, transparent) 0%,
+    color-mix(in srgb, var(--bright-purple) 45%, transparent) 50%,
+    color-mix(in srgb, var(--bright-ultra-violet) 35%, transparent) 100%
+  );
+}
+
+.cursor-cube--default .cursor-cube__face:nth-child(2) {
+  transform: rotateY(180deg) translateZ(7px);
+  background: linear-gradient(
+    315deg,
+    color-mix(in srgb, var(--bright-ultra-violet) 40%, transparent) 0%,
+    color-mix(in srgb, var(--bright-electric-indigo) 30%, transparent) 100%
+  );
+}
+
+.cursor-cube--default .cursor-cube__face:nth-child(3) {
+  transform: rotateY(90deg) translateZ(7px);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--bright-purple) 50%, var(--bright-blue) 50%) 0%,
+    color-mix(in srgb, var(--bright-electric-indigo) 45%, var(--bright-blue) 55%) 50%,
+    color-mix(in srgb, var(--bright-ultra-violet) 35%, transparent) 100%
+  );
+}
+
+.cursor-cube--default .cursor-cube__face:nth-child(4) {
+  transform: rotateY(-90deg) translateZ(7px);
+  background: linear-gradient(
+    225deg,
+    color-mix(in srgb, var(--bright-purple) 45%, transparent) 0%,
+    color-mix(in srgb, var(--bright-ultra-violet) 35%, transparent) 100%
+  );
+}
+
+.cursor-cube--default .cursor-cube__face:nth-child(5) {
+  transform: rotateX(90deg) translateZ(7px);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--bright-orchid-pink) 55%, transparent) 0%,
+    color-mix(in srgb, var(--bright-purple-vibrant) 45%, transparent) 50%,
+    color-mix(in srgb, var(--bright-purple) 35%, transparent) 100%
+  );
+  box-shadow:
+    inset 2px 2px 4px color-mix(in srgb, var(--mono-50) 25%, transparent),
+    inset 0 0 6px color-mix(in srgb, var(--mono-50) 15%, transparent);
+}
+
+.cursor-cube--default .cursor-cube__face:nth-child(6) {
+  transform: rotateX(-90deg) translateZ(7px);
+  background: linear-gradient(
+    315deg,
+    color-mix(in srgb, var(--bright-electric-indigo) 50%, transparent) 0%,
+    color-mix(in srgb, var(--bright-blue) 40%, transparent) 100%
+  );
+}
+
+/* Pointer — blue-forward (hover), faster vertical spin */
+.cursor-cube--pointer .cursor-cube__face:nth-child(1) {
+  transform: translateZ(7px);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--bright-blue) 68%, transparent) 0%,
+    color-mix(in srgb, var(--bright-blue) 52%, var(--bright-electric-indigo) 48%) 50%,
+    color-mix(in srgb, var(--bright-electric-indigo) 48%, transparent) 100%
+  );
+}
+
+.cursor-cube--pointer .cursor-cube__face:nth-child(2) {
+  transform: rotateY(180deg) translateZ(7px);
+  background: linear-gradient(
+    315deg,
+    color-mix(in srgb, var(--bright-blue) 58%, transparent) 0%,
+    color-mix(in srgb, var(--bright-electric-indigo) 42%, transparent) 100%
+  );
+}
+
+.cursor-cube--pointer .cursor-cube__face:nth-child(3) {
+  transform: rotateY(90deg) translateZ(7px);
+  background: linear-gradient(
+    155deg,
+    color-mix(in srgb, var(--bright-blue) 72%, transparent) 0%,
+    color-mix(in srgb, var(--bright-blue) 45%, var(--bright-electric-indigo) 55%) 100%
+  );
+}
+
+.cursor-cube--pointer .cursor-cube__face:nth-child(4) {
+  transform: rotateY(-90deg) translateZ(7px);
+  background: linear-gradient(
+    200deg,
+    color-mix(in srgb, var(--bright-electric-indigo) 48%, transparent) 0%,
+    color-mix(in srgb, var(--bright-blue) 58%, transparent) 100%
+  );
+}
+
+.cursor-cube--pointer .cursor-cube__face:nth-child(5) {
+  transform: rotateX(90deg) translateZ(7px);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--bright-blue) 62%, transparent) 0%,
+    color-mix(in srgb, var(--bright-blue) 40%, var(--bright-electric-indigo) 60%) 100%
+  );
+  box-shadow:
+    inset 2px 2px 4px color-mix(in srgb, var(--bright-blue) 28%, transparent),
+    inset 0 0 6px color-mix(in srgb, var(--bright-blue) 14%, transparent);
+}
+
+.cursor-cube--pointer .cursor-cube__face:nth-child(6) {
+  transform: rotateX(-90deg) translateZ(7px);
+  background: linear-gradient(
+    315deg,
+    color-mix(in srgb, var(--bright-electric-indigo) 52%, transparent) 0%,
+    color-mix(in srgb, var(--bright-blue) 55%, transparent) 100%
+  );
+}
+
+/* Text — red / purple, faster horizontal spin */
+.cursor-cube--text .cursor-cube__face:nth-child(1) {
+  transform: translateZ(7px);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--cube-red) 55%, transparent) 0%,
+    color-mix(in srgb, var(--bright-electric-rose) 45%, transparent) 50%,
+    color-mix(in srgb, var(--bright-purple) 38%, transparent) 100%
+  );
+}
+
+.cursor-cube--text .cursor-cube__face:nth-child(2) {
+  transform: rotateY(180deg) translateZ(7px);
+  background: linear-gradient(
+    315deg,
+    color-mix(in srgb, var(--bright-deep-pink) 45%, transparent) 0%,
+    color-mix(in srgb, var(--bright-ultra-violet) 38%, transparent) 100%
+  );
+}
+
+.cursor-cube--text .cursor-cube__face:nth-child(3) {
+  transform: rotateY(90deg) translateZ(7px);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--cube-red) 50%, var(--bright-purple) 50%) 0%,
+    color-mix(in srgb, var(--bright-purple-vibrant) 40%, transparent) 100%
+  );
+}
+
+.cursor-cube--text .cursor-cube__face:nth-child(4) {
+  transform: rotateY(-90deg) translateZ(7px);
+  background: linear-gradient(
+    225deg,
+    color-mix(in srgb, var(--bright-electric-rose) 48%, transparent) 0%,
+    color-mix(in srgb, var(--bright-ultra-violet) 36%, transparent) 100%
+  );
+}
+
+.cursor-cube--text .cursor-cube__face:nth-child(5) {
+  transform: rotateX(90deg) translateZ(7px);
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--cube-red) 48%, transparent) 0%,
+    color-mix(in srgb, var(--bright-orchid-pink) 42%, transparent) 50%,
+    color-mix(in srgb, var(--bright-purple) 35%, transparent) 100%
+  );
+  box-shadow:
+    inset 2px 2px 4px color-mix(in srgb, var(--cube-red) 18%, transparent),
+    inset 0 0 6px color-mix(in srgb, var(--mono-50) 12%, transparent);
+}
+
+.cursor-cube--text .cursor-cube__face:nth-child(6) {
+  transform: rotateX(-90deg) translateZ(7px);
+  background: linear-gradient(
+    315deg,
+    color-mix(in srgb, var(--bright-purple) 45%, transparent) 0%,
+    color-mix(in srgb, var(--cube-red) 35%, transparent) 100%
+  );
+}
+
+@keyframes cursor-cube-spin-horizontal {
+  from {
+    transform: rotateX(-20deg) rotateY(0deg) rotateZ(0deg);
+  }
+  to {
+    transform: rotateX(-20deg) rotateY(360deg) rotateZ(0deg);
+  }
+}
+
+@keyframes cursor-cube-spin-vertical {
+  from {
+    transform: rotateY(20deg) rotateX(0deg) rotateZ(0deg);
+  }
+  to {
+    transform: rotateY(20deg) rotateX(360deg) rotateZ(0deg);
+  }
+}
