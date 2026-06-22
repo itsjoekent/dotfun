@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "concurrently -n vite,cf \"vite build --watch\" \"wait-on public/build/index.html && wrangler pages dev ./public/build\"",
-    "deploy": "vite build && wrangler pages deploy ./public/build",
+    "deploy": "wrangler pages deploy",
     "build": "vite build",
     "cf-typegen": "wrangler types functions/worker-env.d.ts --include-runtime false"
   },
