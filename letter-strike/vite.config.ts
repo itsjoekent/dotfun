@@ -5,6 +5,9 @@ import { VitePWA } from 'vite-plugin-pwa'
 // https://vite.dev/config/
 export default defineConfig({
   base: '/letter-strike/',
+  build: {
+    outDir: 'dist/letter-strike',
+  },
   server: { host: '0.0.0.0' },
   plugins: [
     react(),
