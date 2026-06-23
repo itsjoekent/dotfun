@@ -1,0 +1,24 @@
+{
+  "name": "Letter Strike",
+  "short_name": "Letter Strike",
+  "description": "Turn-based word strategy game where players strike letters on a grid to discover hidden words and outmaneuver their opponent.",
+  "start_url": "/letter-strike/",
+  "display": "standalone",
+  "background_color": "#1a1a1a",
+  "theme_color": "#1a1a1a",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/letter-strike/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/letter-strike/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}

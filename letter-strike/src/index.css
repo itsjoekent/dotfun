@@ -1,0 +1,87 @@
+/* CSS Variables - Dark Mode */
+:root {
+  /* Typography */
+  --font-family: 'Chivo', sans-serif;
+  
+  /* Colors */
+  --color-bg: #1a1a1a;
+  --color-text: #f5f5f5;
+  --color-text-muted: #9ca3af;
+  
+  /* Board */
+  --color-board-bg: #333333;
+  --color-tile-bg: #555555;
+  --color-tile-text: #ffffff;
+  
+  /* Player/Computer colors */
+  --color-player: #2563eb;
+  --color-player-light: rgba(37, 99, 235, 0.15);
+  --color-player-border: rgba(37, 99, 235, 0.3);
+  --color-computer: #dc2626;
+  --color-filler: #9ca3af;
+  --color-neutral: #6b7280;
+  --color-guessed: #9ca3af;
+  --color-empty: #000000;
+  
+  /* Keyboard */
+  --color-key-bg: #4a5568;
+  --color-key-text: #ffffff;
+  --color-key-shadow: #2d3748;
+  --color-key-pressed-bg: #2d3748;
+  --color-key-pressed-text: #718096;
+  
+  /* Buttons */
+  --color-btn-bg: var(--color-player);
+  --color-btn-text: white;
+  --color-btn-hover: #1d4ed8;
+  
+  /* Game Results */
+  --color-win-start: #065f46;
+  --color-win-end: #047857;
+  --color-lose-start: #7f1d1d;
+  --color-lose-end: #991b1b;
+  --color-tie-start: #4338ca;
+  --color-tie-end: #6366f1;
+  
+  /* Debug Panel */
+  --color-debug-bg: #1a1a2e;
+  --color-debug-border: #4a4a6a;
+  --color-debug-text: #e0e0e0;
+  --color-debug-accent: #a78bfa;
+  
+  /* Misc */
+  --border-radius: 8px;
+  --border-radius-sm: 4px;
+  --border-radius-lg: 12px;
+}
+
+/* Base Styles */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+}
+
+body {
+  font-family: var(--font-family);
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  line-height: 1.5;
+  font-weight: 400;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding-top: 24px;
+}
