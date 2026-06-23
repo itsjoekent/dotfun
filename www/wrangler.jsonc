@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
-  "name": "dotcom",
+  "name": "dotfun",
   "main": "./worker/index.ts",
   "compatibility_date": "2024-12-05",
   "assets": {
