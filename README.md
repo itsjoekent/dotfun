@@ -1,3 +1,3 @@
-# dotcom
+# dotfun
 
-just a silly website ➡️ [joekent.com](https://joekent.com)
+🕹️ arcade games
