@@ -10,6 +10,7 @@ interface KeyboardProps {
   letterStates: Map<string, LetterStatus>;
   onKey: (key: string) => void;
   disabled?: boolean;
+  dimmed?: boolean;
 }
 
 function statusClass(status: LetterStatus | undefined): string {
@@ -25,9 +26,9 @@ function keyLabel(key: string): string {
   return key.toUpperCase();
 }
 
-export function Keyboard({ letterStates, onKey, disabled }: KeyboardProps) {
+export function Keyboard({ letterStates, onKey, disabled, dimmed }: KeyboardProps) {
   return (
-    <div className="keyboard">
+    <div className={`keyboard ${dimmed ? 'dimmed' : ''}`}>
       {KEYBOARD_ROWS.map((row, rowIndex) => (
         <div key={rowIndex} className="keyboard-row">
           {row.map((key) => {

@@ -106,7 +106,7 @@ export function createGame(answer?: string): GameState {
   return {
     answer: (answer ?? pickRandomAnswer()).toLowerCase(),
     guesses: [],
-    turn: 'human',
+    turn: Math.random() < 0.5 ? 'human' : 'computer',
     result: 'playing',
   };
 }

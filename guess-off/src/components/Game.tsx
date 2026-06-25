@@ -12,6 +12,7 @@ import {
 import { pickComputerGuess } from '../ai';
 import { GuessRow } from './GuessRow';
 import { Keyboard } from './Keyboard';
+import { ShareButton } from './ShareButton';
 
 interface GameProps {
   onNewGame: () => void;
@@ -21,7 +22,8 @@ export function Game({ onNewGame }: GameProps) {
   const [gameState, setGameState] = useState<GameState>(() => createGame());
   const [currentWord, setCurrentWord] = useState('');
   const [error, setError] = useState('');
-  const [aiThinking, setAiThinking] = useState(false);
+  const aiThinking = gameState.turn === 'computer' && gameState.result === 'playing';
+  const { turn, result, guesses, answer } = gameState;
 
   const letterStates = useMemo(() => {
     let states = new Map<string, LetterStatus>();
@@ -96,30 +98,29 @@ export function Game({ onNewGame }: GameProps) {
   }, [handleKey]);
 
   useEffect(() => {
-    if (gameState.turn !== 'computer' || gameState.result !== 'playing') {
+    if (turn !== 'computer' || result !== 'playing') {
       return;
     }
 
-    const { guesses, answer } = gameState;
-    setAiThinking(true);
+    const thinkTime = 1000 + Math.random() * 2000;
     const timer = setTimeout(() => {
       const guess = pickComputerGuess(guesses, answer);
       setGameState((state) => submitComputerGuess(state, guess));
-      setAiThinking(false);
-    }, 600);
+    }, thinkTime);
 
-    return () => {
-      clearTimeout(timer);
-      setAiThinking(false);
-    };
-  }, [gameState.turn, gameState.result, gameState.guesses]);
+    return () => clearTimeout(timer);
+  }, [turn, result, guesses, answer]);
+
+  const isGameOver = gameState.result !== 'playing';
+  const keyboardDimmed = aiThinking || isGameOver;
 
   return (
     <div className="game">
       <header className="game-header">
         <h1>Guess Off</h1>
         <p className="turn-indicator">
-          {gameState.result !== 'playing'
+          {aiThinking && <span className="turn-spinner" aria-hidden="true" />}
+          {isGameOver
             ? gameState.result === 'human_wins'
               ? 'You win!'
               : 'Computer wins!'
@@ -129,32 +130,50 @@ export function Game({ onNewGame }: GameProps) {
         </p>
       </header>
 
-      <section className="guess-board">
-        {gameState.guesses.map((guess, i) => (
-          <GuessRow key={i} guess={guess} />
-        ))}
-        {gameState.result === 'playing' && gameState.turn === 'human' && !aiThinking && (
-          <GuessRow currentWord={currentWord} active />
-        )}
-        {aiThinking && <GuessRow currentWord="....." active />}
-      </section>
+      <div className="game-main">
+        <div className="guess-board-scroll">
+          <section className="guess-board">
+            {gameState.guesses.map((guess, i) => (
+              <GuessRow key={i} guess={guess} />
+            ))}
+            {!isGameOver && gameState.turn === 'human' && !aiThinking && (
+              <GuessRow currentWord={currentWord} active player="human" />
+            )}
+            {aiThinking && <GuessRow currentWord="....." active player="computer" />}
+          </section>
 
-      {error && <p className="error-message">{error}</p>}
-
-      {gameState.result !== 'playing' && (
-        <div className="game-over">
-          <p>The word was <strong>{gameState.answer.toUpperCase()}</strong></p>
-          <button type="button" onClick={onNewGame}>
-            Play Again
-          </button>
+          {error && <p className="error-message">{error}</p>}
         </div>
-      )}
 
-      <Keyboard
-        letterStates={letterStates}
-        onKey={handleKey}
-        disabled={gameState.result !== 'playing' || gameState.turn !== 'human' || aiThinking}
-      />
+        <div className="game-bottom">
+          <div className="keyboard-fade" aria-hidden="true" />
+
+          <div className="keyboard-wrapper">
+            <Keyboard
+              letterStates={letterStates}
+              onKey={handleKey}
+              disabled={isGameOver || gameState.turn !== 'human' || aiThinking}
+              dimmed={keyboardDimmed}
+            />
+
+            {isGameOver && (
+              <div className="game-over">
+                <p>
+                  The word was <strong>{gameState.answer.toUpperCase()}</strong>
+                </p>
+                <div className="game-over-actions">
+                  <button type="button" onClick={onNewGame}>
+                    Play Again
+                  </button>
+                  <ShareButton />
+                </div>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="game-bottom-spacer" aria-hidden="true" />
+      </div>
     </div>
   );
 }

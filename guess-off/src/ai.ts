@@ -81,9 +81,8 @@ export function scoreWord(
 
   for (const char of word) {
     if (VOWELS.has(char)) {
-      weight += 0.1;
-      if (!guessedLetters.has(char) && vowelCounts.get(char) === 1) {
-        weight += 0.05;
+      if (!guessedLetters.has(char)) {
+        weight += (vowelCounts.get(char) === 1 ? 0.15 : 0.1);
       }
     }
   }
@@ -93,7 +92,7 @@ export function scoreWord(
   }
 
   if (word === answer && guesses.length > 0 && countLettersOnBoard(word, guesses) >= 2) {
-    weight += 0.1;
+    weight += countLettersOnBoard(word, guesses) * 0.05;
   }
 
   return weight;
@@ -115,7 +114,7 @@ export function pickComputerGuess(guesses: Guess[], answer: string): string {
     .sort((a, b) => b.weight - a.weight);
 
   for (const { word, weight } of weighted) {
-    if (Math.random() >= weight) {
+    if (Math.random() <= weight) {
       return word;
     }
   }
