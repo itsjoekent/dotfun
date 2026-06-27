@@ -13,6 +13,7 @@ import { pickComputerGuess } from '../ai';
 import { GuessRow } from './GuessRow';
 import { Keyboard } from './Keyboard';
 import { ShareButton } from './ShareButton';
+import { BackgroundCanvas } from './BackgroundCanvas';
 
 interface GameProps {
   onNewGame: () => void;
@@ -114,66 +115,69 @@ export function Game({ onNewGame }: GameProps) {
   const isGameOver = gameState.result !== 'playing';
   const keyboardDimmed = aiThinking || isGameOver;
 
+  const activePlayer = turn === 'human' ? 'B' : 'A';
+
   return (
-    <div className="game">
-      <header className="game-header">
-        <h1>Guess Off</h1>
-        <p className="turn-indicator">
-          {aiThinking && <span className="turn-spinner" aria-hidden="true" />}
-          {isGameOver
-            ? gameState.result === 'human_wins'
-              ? 'You win!'
-              : 'Computer wins!'
-            : aiThinking
-              ? 'Computer is guessing...'
-              : 'Your turn'}
-        </p>
-      </header>
+    <>
+      <BackgroundCanvas activePlayer={activePlayer} />
+      <div className="game">
+        <header className="game-header">
+          <h1>Guess Off</h1>
+          <p className="turn-indicator">
+            {aiThinking && <span className="turn-spinner" aria-hidden="true" />}
+            {isGameOver
+              ? gameState.result === 'human_wins'
+                ? 'You win!'
+                : 'Computer wins!'
+              : aiThinking
+                ? 'Computer is guessing...'
+                : 'Your turn'}
+          </p>
+        </header>
 
-      <div className="game-main">
-        <div className="guess-board-scroll">
-          <section className="guess-board">
-            {gameState.guesses.map((guess, i) => (
-              <GuessRow key={i} guess={guess} />
-            ))}
-            {!isGameOver && gameState.turn === 'human' && !aiThinking && (
-              <GuessRow currentWord={currentWord} active player="human" />
-            )}
-            {aiThinking && <GuessRow currentWord="....." active player="computer" />}
-          </section>
+        <div className="game-main">
+          <div className="guess-board-scroll">
+            <section className="guess-board">
+              {gameState.guesses.map((guess, i) => (
+                <GuessRow key={i} guess={guess} />
+              ))}
+              {!isGameOver && gameState.turn === 'human' && !aiThinking && (
+                <GuessRow currentWord={currentWord} active player="human" />
+              )}
+              {aiThinking && <GuessRow currentWord="....." active player="computer" />}
+            </section>
 
-          {error && <p className="error-message">{error}</p>}
-        </div>
-
-        <div className="game-bottom">
-          <div className="keyboard-fade" aria-hidden="true" />
-
-          <div className="keyboard-wrapper">
-            <Keyboard
-              letterStates={letterStates}
-              onKey={handleKey}
-              disabled={isGameOver || gameState.turn !== 'human' || aiThinking}
-              dimmed={keyboardDimmed}
-            />
-
-            {isGameOver && (
-              <div className="game-over">
-                <p>
-                  The word was <strong>{gameState.answer.toUpperCase()}</strong>
-                </p>
-                <div className="game-over-actions">
-                  <button type="button" onClick={onNewGame}>
-                    Play Again
-                  </button>
-                  <ShareButton />
-                </div>
-              </div>
-            )}
+            {error && <p className="error-message">{error}</p>}
           </div>
-        </div>
 
-        <div className="game-bottom-spacer" aria-hidden="true" />
+          <div className="game-bottom">
+            <div className="keyboard-wrapper">
+              <Keyboard
+                letterStates={letterStates}
+                onKey={handleKey}
+                disabled={isGameOver || gameState.turn !== 'human' || aiThinking}
+                dimmed={keyboardDimmed}
+              />
+
+              {isGameOver && (
+                <div className="game-over">
+                  <p>
+                    The word was <strong>{gameState.answer.toUpperCase()}</strong>
+                  </p>
+                  <div className="game-over-actions">
+                    <button type="button" onClick={onNewGame}>
+                      Play Again
+                    </button>
+                    <ShareButton />
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div className="game-bottom-spacer" aria-hidden="true" />
+        </div>
       </div>
-    </div>
+    </>
   );
 }
