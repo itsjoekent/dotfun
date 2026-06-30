@@ -6,6 +6,11 @@
   "assets": {
     "directory": "./public/build",
     "binding": "ASSETS",
-    "run_worker_first": ["/letter-strike", "/letter-strike/*"]
+    "run_worker_first": [
+      "/letter-strike",
+      "/letter-strike/*",
+      "/guess-off",
+      "/guess-off/*"
+    ]
   }
 }
