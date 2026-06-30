@@ -8,6 +8,7 @@ import {
   submitGuess,
   type GameState,
   type LetterStatus,
+  type Player,
 } from '../game';
 import { pickComputerGuess } from '../ai';
 import { GuessRow } from './GuessRow';
@@ -16,11 +17,12 @@ import { ShareButton } from './ShareButton';
 import { BackgroundCanvas } from './BackgroundCanvas';
 
 interface GameProps {
-  onNewGame: () => void;
+  firstPlayer: Player;
+  onNewGame: (winner: Player) => void;
 }
 
-export function Game({ onNewGame }: GameProps) {
-  const [gameState, setGameState] = useState<GameState>(() => createGame());
+export function Game({ firstPlayer, onNewGame }: GameProps) {
+  const [gameState, setGameState] = useState<GameState>(() => createGame(undefined, firstPlayer));
   const [currentWord, setCurrentWord] = useState('');
   const [error, setError] = useState('');
   const aiThinking = gameState.turn === 'computer' && gameState.result === 'playing';
@@ -122,7 +124,6 @@ export function Game({ onNewGame }: GameProps) {
       <BackgroundCanvas activePlayer={activePlayer} />
       <div className="game">
         <header className="game-header">
-          <h1>Guess Off</h1>
           <p className="turn-indicator">
             {aiThinking && <span className="turn-spinner" aria-hidden="true" />}
             {isGameOver
@@ -165,7 +166,12 @@ export function Game({ onNewGame }: GameProps) {
                     The word was <strong>{gameState.answer.toUpperCase()}</strong>
                   </p>
                   <div className="game-over-actions">
-                    <button type="button" onClick={onNewGame}>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        onNewGame(gameState.result === 'human_wins' ? 'human' : 'computer')
+                      }
+                    >
                       Play Again
                     </button>
                     <ShareButton />

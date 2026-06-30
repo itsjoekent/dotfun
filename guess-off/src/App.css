@@ -1,3 +1,136 @@
+.load-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(1.5rem, 6vw, 2.5rem);
+  background: #000;
+  transition: opacity 0.4s ease;
+}
+
+.load-screen--fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.load-screen-title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: clamp(1.75rem, 8vw, 2.75rem);
+  font-weight: 400;
+  color: #fff;
+  letter-spacing: 0.06em;
+  text-align: center;
+}
+
+.load-screen-gloves {
+  --glove-size: clamp(3rem, 14vw, 4.5rem);
+  --tap-travel: clamp(2.25rem, 11vw, 3.5rem);
+  --tap-half: calc(var(--tap-travel) * 0.55);
+  --tap-delay: 0.75s;
+  --tap-duration: 2s;
+
+  position: relative;
+  width: clamp(11rem, 52vw, 17rem);
+  height: var(--glove-size);
+}
+
+.load-screen-glove-slot {
+  position: absolute;
+  top: 50%;
+  width: var(--glove-size);
+  height: var(--glove-size);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  will-change: transform;
+}
+
+.load-screen-glove-slot--left {
+  left: 0;
+  animation: glove-slot-left var(--tap-duration) linear var(--tap-delay) 1 both;
+}
+
+.load-screen-glove-slot--right {
+  right: 0;
+  animation: glove-slot-right var(--tap-duration) linear var(--tap-delay) 1 both;
+}
+
+.load-screen-glove {
+  width: var(--glove-size);
+  height: auto;
+  object-fit: contain;
+  flex-shrink: 0;
+}
+
+.load-screen-glove--left {
+  transform: rotate(90deg);
+}
+
+.load-screen-glove--right {
+  transform: rotate(-90deg);
+}
+
+/* a    b → a  b → ab → a  b → ab → a  b → a    b */
+@keyframes glove-slot-left {
+  0%,
+  100% {
+    transform: translate3d(0, -50%, 0);
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  10% {
+    transform: translate3d(var(--tap-half), -50%, 0);
+    animation-timing-function: cubic-bezier(0.7, 0, 0.85, 0.35);
+  }
+  18% {
+    transform: translate3d(var(--tap-travel), -50%, 0);
+    animation-timing-function: cubic-bezier(0.35, 0, 0.85, 0.35);
+  }
+  28% {
+    transform: translate3d(var(--tap-half), -50%, 0);
+    animation-timing-function: cubic-bezier(0.7, 0, 0.85, 0.35);
+  }
+  36% {
+    transform: translate3d(var(--tap-travel), -50%, 0);
+    animation-timing-function: cubic-bezier(0.35, 0, 0.85, 0.35);
+  }
+  46% {
+    transform: translate3d(var(--tap-half), -50%, 0);
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
+@keyframes glove-slot-right {
+  0%,
+  100% {
+    transform: translate3d(0, -50%, 0);
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  10% {
+    transform: translate3d(calc(-1 * var(--tap-half)), -50%, 0);
+    animation-timing-function: cubic-bezier(0.7, 0, 0.85, 0.35);
+  }
+  18% {
+    transform: translate3d(calc(-1 * var(--tap-travel)), -50%, 0);
+    animation-timing-function: cubic-bezier(0.35, 0, 0.85, 0.35);
+  }
+  28% {
+    transform: translate3d(calc(-1 * var(--tap-half)), -50%, 0);
+    animation-timing-function: cubic-bezier(0.7, 0, 0.85, 0.35);
+  }
+  36% {
+    transform: translate3d(calc(-1 * var(--tap-travel)), -50%, 0);
+    animation-timing-function: cubic-bezier(0.35, 0, 0.85, 0.35);
+  }
+  46% {
+    transform: translate3d(calc(-1 * var(--tap-half)), -50%, 0);
+    animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+}
+
 .background-canvas {
   position: fixed;
   inset: 0;
@@ -44,15 +177,9 @@
   text-align: center;
 }
 
-.game-header h1 {
-  margin: 0 0 0.5rem;
-  font-size: clamp(1.375rem, 5vmin, 1.75rem);
-  color: var(--color-text-light);
-}
-
 .game .turn-indicator {
   margin: 0;
-  color: var(--color-text-muted-light);
+  color: var(--color-text-light);
   display: flex;
   align-items: center;
   justify-content: center;

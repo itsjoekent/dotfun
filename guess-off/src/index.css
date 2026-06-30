@@ -1,5 +1,6 @@
 :root {
   --font-family: system-ui, -apple-system, sans-serif;
+  --font-display: 'Holtwood One SC', serif;
 
   /* Accent palette (guess highlights) */
   --racing-red: #fb282c;

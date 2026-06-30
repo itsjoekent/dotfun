@@ -102,11 +102,11 @@ export function mergeLetterStates(
   return next;
 }
 
-export function createGame(answer?: string): GameState {
+export function createGame(answer?: string, firstPlayer: Player = 'human'): GameState {
   return {
     answer: (answer ?? pickRandomAnswer()).toLowerCase(),
     guesses: [],
-    turn: Math.random() < 0.5 ? 'human' : 'computer',
+    turn: firstPlayer,
     result: 'playing',
   };
 }
