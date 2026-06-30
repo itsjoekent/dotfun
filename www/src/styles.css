@@ -168,6 +168,12 @@ body {
     box-shadow 0.15s ease;
 }
 
+.project-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .project-card:not(.project-card--placeholder):hover {
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
