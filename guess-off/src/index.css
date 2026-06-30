@@ -1,18 +1,44 @@
 :root {
   --font-family: system-ui, -apple-system, sans-serif;
-  --color-bg: #1a1a1a;
-  --color-text: #f5f5f5;
-  --color-text-muted: #9ca3af;
-  --color-tile-border: #4a5568;
-  --color-tile-filled: #2d3748;
-  --color-correct: #22c55e;
-  --color-present: #f59e0b;
-  --color-absent: #4a5568;
-  --color-key-bg: #4a5568;
-  --color-key-text: #ffffff;
-  --color-key-shadow: #2d3748;
-  --color-btn-bg: #2563eb;
-  --color-btn-hover: #1d4ed8;
+  --font-display: 'Holtwood One SC', serif;
+
+  /* Accent palette (guess highlights) */
+  --racing-red: #fb282c;
+  --blaze-orange: #f56112;
+  --deep-saffron: #fa8d08;
+  --amber-gold: #fabe33;
+  --moss-green: #82c84d;
+  --seaweed: #2ea985;
+  --cornflower-ocean: #3c6d97;
+
+  /* UI mono palette */
+  --bright-snow: #f8f9fa;
+  --platinum: #e9ecef;
+  --alabaster-grey: #dee2e6;
+  --pale-slate: #ced4da;
+  --pale-slate-2: #adb5bd;
+  --slate-grey: #6c757d;
+  --iron-grey: #495057;
+  --gunmetal: #343a40;
+  --carbon-black: #212529;
+
+  --color-bg: transparent;
+  --color-text-light: var(--bright-snow);
+  --color-text-muted-light: var(--pale-slate-2);
+  --color-tile-filled: var(--carbon-black);
+  --color-tile-border: var(--iron-grey);
+  --color-tile-border-filled: var(--slate-grey);
+  --color-tile-border-active: var(--pale-slate-2);
+  --color-tile-text: var(--bright-snow);
+  --color-correct: var(--moss-green);
+  --color-present: var(--amber-gold);
+  --color-absent: var(--iron-grey);
+  --color-key-bg: var(--gunmetal);
+  --color-key-text: var(--bright-snow);
+  --color-key-shadow: var(--carbon-black);
+  --color-btn-bg: var(--gunmetal);
+  --color-btn-hover: var(--iron-grey);
+  --color-error: var(--racing-red);
 }
 
 * {
@@ -33,8 +59,8 @@ body {
 
 body {
   font-family: var(--font-family);
-  background-color: var(--color-bg);
-  color: var(--color-text);
+  background-color: var(--carbon-black);
+  color: var(--color-text-light);
 }
 
 #root {

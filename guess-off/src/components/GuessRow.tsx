@@ -1,4 +1,6 @@
 import type { Guess, Player } from '../game';
+import gloveBlue from '../assets/glove-blue-top.png';
+import gloveRed from '../assets/glove-red-top.png';
 
 interface GuessRowProps {
   guess?: Guess;
@@ -7,9 +9,9 @@ interface GuessRowProps {
   player?: Player;
 }
 
-const PLAYER_EMOJI: Record<Player, string> = {
-  human: '😼',
-  computer: '🤖',
+const PLAYER_GLOVE: Record<Player, string> = {
+  human: gloveBlue,
+  computer: gloveRed,
 };
 
 export function GuessRow({ guess, currentWord, active, player }: GuessRowProps) {
@@ -18,8 +20,10 @@ export function GuessRow({ guess, currentWord, active, player }: GuessRowProps) 
 
   return (
     <div className={`guess-row ${active ? 'active' : ''} ${displayPlayer ?? ''}`}>
-      <span className="guess-row-emoji" aria-hidden="true">
-        {displayPlayer ? PLAYER_EMOJI[displayPlayer] : ''}
+      <span className="guess-row-player" aria-hidden="true">
+        {displayPlayer && (
+          <img src={PLAYER_GLOVE[displayPlayer]} alt="" className="guess-row-glove" />
+        )}
       </span>
       <div className="guess-row-tiles">
         {letters.map((letter, i) => {

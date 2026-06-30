@@ -39,8 +39,12 @@ function filterFiveLetterWords(lines: string[], skipHeader = false): string[] {
   return five;
 }
 
-const five = filterFiveLetterWords(readWordLines(wordsPath), true);
-const popularWords = filterFiveLetterWords(readWordLines(popularWordsPath));
+const fiveRaw = filterFiveLetterWords(readWordLines(wordsPath), true);
+const fiveSet = new Set(fiveRaw);
+const popularRaw = filterFiveLetterWords(readWordLines(popularWordsPath));
+const popularOnly = popularRaw.filter((w) => !fiveSet.has(w));
+const five = [...fiveRaw, ...popularOnly].sort();
+const popularWords = popularRaw;
 
 const words = { five, popularWords };
 
